@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile": "hardhat compile",
     "test": "npx hardhat test"
   },
   "keywords": [],
