@@ -87,7 +87,7 @@ export const useContract = ({
     if (!bank) return;
     try {
       const numOfBills = await bank.getNumberOfBills();
-      const term = await bank.term();
+      const term = await bank.TERM();
 
       for (let index = 0; index < numOfBills.toNumber(); index++) {
         const billOrigin = await bank.allBills(index);

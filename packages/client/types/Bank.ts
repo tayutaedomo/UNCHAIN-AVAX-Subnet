@@ -26,42 +26,51 @@ import type {
 
 export interface BankInterface extends utils.Interface {
   functions: {
+    "DISCOUNT_RATE()": FunctionFragment;
+    "INTEREST_RATE()": FunctionFragment;
+    "TERM()": FunctionFragment;
     "allBills(uint256)": FunctionFragment;
     "beforeDueDate(uint256)": FunctionFragment;
     "cashBill(uint256)": FunctionFragment;
     "completeBill(uint256)": FunctionFragment;
-    "discountRate()": FunctionFragment;
     "dishonoredAddresses(uint256)": FunctionFragment;
     "getAmountToCashBill(uint256)": FunctionFragment;
     "getAmountToPayBill(uint256)": FunctionFragment;
     "getBalance()": FunctionFragment;
     "getNumberOfBills()": FunctionFragment;
     "getNumberOfDishonoredAddresses()": FunctionFragment;
-    "interestRate()": FunctionFragment;
     "issueBill(uint256,address)": FunctionFragment;
     "lockToken(uint256)": FunctionFragment;
-    "term()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "DISCOUNT_RATE"
+      | "INTEREST_RATE"
+      | "TERM"
       | "allBills"
       | "beforeDueDate"
       | "cashBill"
       | "completeBill"
-      | "discountRate"
       | "dishonoredAddresses"
       | "getAmountToCashBill"
       | "getAmountToPayBill"
       | "getBalance"
       | "getNumberOfBills"
       | "getNumberOfDishonoredAddresses"
-      | "interestRate"
       | "issueBill"
       | "lockToken"
-      | "term"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "DISCOUNT_RATE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "INTEREST_RATE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "TERM", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "allBills",
     values: [PromiseOrValue<BigNumberish>]
@@ -77,10 +86,6 @@ export interface BankInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "completeBill",
     values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "discountRate",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "dishonoredAddresses",
@@ -107,10 +112,6 @@ export interface BankInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "interestRate",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "issueBill",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
@@ -118,8 +119,16 @@ export interface BankInterface extends utils.Interface {
     functionFragment: "lockToken",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "term", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "DISCOUNT_RATE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "INTEREST_RATE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "TERM", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allBills", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "beforeDueDate",
@@ -128,10 +137,6 @@ export interface BankInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "cashBill", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "completeBill",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "discountRate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -155,13 +160,8 @@ export interface BankInterface extends utils.Interface {
     functionFragment: "getNumberOfDishonoredAddresses",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "interestRate",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "issueBill", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "lockToken", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "term", data: BytesLike): Result;
 
   events: {};
 }
@@ -193,6 +193,12 @@ export interface Bank extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    DISCOUNT_RATE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    INTEREST_RATE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    TERM(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     allBills(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -222,8 +228,6 @@ export interface Bank extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    discountRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     dishonoredAddresses(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -247,8 +251,6 @@ export interface Bank extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    interestRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     issueBill(
       _amount: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
@@ -259,9 +261,13 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    term(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
+
+  DISCOUNT_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  INTEREST_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  TERM(overrides?: CallOverrides): Promise<BigNumber>;
 
   allBills(
     arg0: PromiseOrValue<BigNumberish>,
@@ -292,8 +298,6 @@ export interface Bank extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  discountRate(overrides?: CallOverrides): Promise<BigNumber>;
-
   dishonoredAddresses(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -315,8 +319,6 @@ export interface Bank extends BaseContract {
 
   getNumberOfDishonoredAddresses(overrides?: CallOverrides): Promise<BigNumber>;
 
-  interestRate(overrides?: CallOverrides): Promise<BigNumber>;
-
   issueBill(
     _amount: PromiseOrValue<BigNumberish>,
     _recipient: PromiseOrValue<string>,
@@ -328,9 +330,13 @@ export interface Bank extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  term(overrides?: CallOverrides): Promise<BigNumber>;
-
   callStatic: {
+    DISCOUNT_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    INTEREST_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    TERM(overrides?: CallOverrides): Promise<BigNumber>;
+
     allBills(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -360,8 +366,6 @@ export interface Bank extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    discountRate(overrides?: CallOverrides): Promise<BigNumber>;
-
     dishonoredAddresses(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -385,8 +389,6 @@ export interface Bank extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    interestRate(overrides?: CallOverrides): Promise<BigNumber>;
-
     issueBill(
       _amount: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
@@ -397,13 +399,17 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    term(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
+    DISCOUNT_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    INTEREST_RATE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    TERM(overrides?: CallOverrides): Promise<BigNumber>;
+
     allBills(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -423,8 +429,6 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    discountRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     dishonoredAddresses(
       arg0: PromiseOrValue<BigNumberish>,
@@ -449,8 +453,6 @@ export interface Bank extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    interestRate(overrides?: CallOverrides): Promise<BigNumber>;
-
     issueBill(
       _amount: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
@@ -461,11 +463,15 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    term(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    DISCOUNT_RATE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    INTEREST_RATE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    TERM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     allBills(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -485,8 +491,6 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    discountRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dishonoredAddresses(
       arg0: PromiseOrValue<BigNumberish>,
@@ -511,8 +515,6 @@ export interface Bank extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    interestRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     issueBill(
       _amount: PromiseOrValue<BigNumberish>,
       _recipient: PromiseOrValue<string>,
@@ -523,7 +525,5 @@ export interface Bank extends BaseContract {
       _id: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    term(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
